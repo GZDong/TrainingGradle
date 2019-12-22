@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'John' //找到John.properties
+
+myDefine {
+    p1 'new' //这样写，如果key是一个属性，不是方法，默认就是用属性的set方法
+}
+
+android {  //执行一个android()方法,如果插件application中有对它做extension的指定，方法中的操作会对应application插件中的某个类（类似java接口）
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.gzd.traininggradle"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {  //最底层目录
+        debug {
+
+        }
+        others {
+            initWith(debug)
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions 'price', 'nation' //如果需要加别的，在这里定义其他维度目录
+    productFlavors {  //定义渠道目录
+        free {
+            dimension 'price' //指定目录名称
+        }
+        paid {
+            dimension 'price'
+        }
+        china {
+            dimension 'nation'
+        }
+        global {
+            dimension 'nation'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    //implementation，compile，api是对依赖链模式选择
+    //compile, 1,会导致无用编译，2.会导致内层依赖包的api暴露；api是对compile重启
+}

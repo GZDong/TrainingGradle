@@ -1,0 +1,61 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript ({
+    repositories {  //你的dependencies要去哪里下载，这里是总的
+        google()
+        jcenter()
+        
+    }
+    dependencies {
+        classpath ('com.android.tools.build:gradle:3.5.1') //给gradle文件用的
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+
+})
+//闭包：可以被当作参数传递方法，java不可以传方法，只能封装到类里，用对象来传，而回调就是使用接口代替类，它构建对象更方便
+Closure closureMethord = {
+    //...
+}
+int methord(Closure closure) {
+
+}
+
+allprojects {
+    repositories { //这里是给每个项目使用的以来来源库
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    println("1")  //配置阶段
+    delete rootProject.buildDir //只是配置，不是执行
+    println("2")
+
+    doLast {  //执行阶段
+        println("3")
+    }
+
+    doFirst { //执行阶段
+        println("4")
+    }
+}
+
+task bumpVersion() {
+    doFirst {
+
+    }
+}
+
+task bumpVersionAndNotify(dependsOn: bumpVersion) {
+    doLast {
+       println("after")
+    }
+}
+
+afterEvaluate {
+
+}

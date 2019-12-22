@@ -1,0 +1,11 @@
+repositories {  //你的dependencies要去哪里下载，这里是总的
+    google()
+    jcenter()
+
+}
+dependencies {
+    implementation ('com.android.tools.build:gradle:3.5.1')
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+}
